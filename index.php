@@ -6,7 +6,6 @@ include('Response.php');
 include('Request.php');
 include('Route.php');
 
-echo $_SERVER['REQUEST_URI'];
 
 $app = AppFactory::createApp();
 
@@ -29,7 +28,7 @@ $app->get('/', function(Request $request, Response $response) {
 
 $app->get('/hallo', function(Request $request, Response $response) {
     $response->append("Dit is een andere route");
-});
+})->add($mw);
 
 $app->run();
 
