@@ -35,7 +35,7 @@ $app->get('/', function(Request $request, Response $response) {
 
 $app->get('/hallo', function(Request $request, Response $response) {
     $response->append("Dit is een andere route");
-});
+})->add($mw);
 
 $app->get('/home/hello/{bla}/{id}', HomeController::class, "index")->add($mw2);
 
