@@ -1,5 +1,7 @@
 <?php
-
+namespace App\Middleware;
+use App\Http\Request;
+use App\Http\Response;
 class Auth
 {
     private array $allowed_users;

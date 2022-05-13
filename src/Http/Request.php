@@ -1,4 +1,5 @@
 <?php
+namespace App\Http;
 
 class Request
 {
@@ -17,7 +18,7 @@ class Request
         }
     }
 
-    private function addParam($key, $value) {
+    public function addParam($key, $value) {
         $this->params[$key] = $value;
     }
 
