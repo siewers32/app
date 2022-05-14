@@ -1,0 +1,25 @@
+<?php
+extract($this->data);
+
+//Navigatie
+$render[':login'] = isset($_SESSION['user']) ? '<span>'.ucfirst($_SESSION['user']).'</span>':"<a href='index.php?p=login'>Login</a>";
+$render[':logout'] = isset($_SESSION['user']) ? "<a href='index.php?p=login&logout=true'>Uitloggen</a>": "";
+
+
+//Main
+$html = "<ul>";
+$image = __DIR__."/images/".$movie['picture'];
+if(!is_dir($image)) {
+    $imageData = base64_encode(file_get_contents($image));
+    $src = 'data: '.mime_content_type($image).';base64,'.$imageData;
+}
+$html .= "<li>" . $movie['title'] . "</li>";
+$html .= "<li>" . $movie['year'] . "</li>";
+$html .= "<li><img src='".$src."' alt='".$movie['picture']."'></li>";
+
+$html .= "</ul>";
+
+$render[':content'] = $html;
+
+
+?>

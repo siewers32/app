@@ -3,12 +3,13 @@ namespace App\Application;
 
 use App\Http\Request;
 use App\Http\Response;
-use App\Controllers\HomeController;
+
 
 class App
 {
     private Request $request;
     private Response $response;
+    private Container $c;
     public array $middleware;
     //public Route $route;
     public array $routes;
@@ -19,6 +20,11 @@ class App
         $this->response = new Response();
         $this->middleware = [];
         $this->routes = [];
+    }
+
+    public function createContainer() {
+        $this->c = new Container();
+        return $this->c;
     }
 
     /**
@@ -42,7 +48,7 @@ class App
         if(is_callable($closure)) {
             $r = new Route($uri, $closure, $args=[]);
         } else {
-            if($obj = new $closure()) {
+            if($obj = new $closure($this->c)) {
                 $r = new Route($uri, function () {});
                 $r->setClosure(function () use ($obj, $action, $r) {
                     $obj->$action($this->request, $this->response, $r->getArgs());

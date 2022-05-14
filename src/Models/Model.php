@@ -9,10 +9,6 @@ abstract class Model
     public string $pk;
     public string $fk;
 
-    public function __construct() {
-
-    }
-
     public function all(PDO $connection) {
         $query = "select * from ".$this->table;
         $stmt = $connection->prepare($query);

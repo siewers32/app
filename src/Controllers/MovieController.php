@@ -6,7 +6,7 @@ use App\Http\Response;
 use App\Models\MovieModel;
 
 
-class HomeController extends Controller
+class MovieController extends Controller
 {
     public function __construct(Container $c)
     {
@@ -17,7 +17,14 @@ class HomeController extends Controller
     public function index(Request $request, Response $response, $args) {
         $mm = new MovieModel();
         $this->view->add('movies', $mm->all($this->db));
-        $this->view->render($response, 'home.phtml');
+        $this->view->render($response, 'movies.phtml');
     }
 
+    public function detail(Request $request, Response $response, $args) {
+        extract($args);
+        $mm = new MovieModel();
+        $this->view->add('movie', $mm->getById($this->db, $id));
+        $this->view->render($response, 'movie.phtml');
+
+    }
 }

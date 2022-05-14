@@ -1,0 +1,27 @@
+<?php
+extract($this->data);
+
+//Navigatie
+$render[':login'] = isset($_SESSION['user']) ? '<span>'.ucfirst($_SESSION['user']).'</span>':"<a href='index.php?p=login'>Login</a>";
+$render[':logout'] = isset($_SESSION['user']) ? "<a href='index.php?p=login&logout=true'>Uitloggen</a>": "";
+
+
+//Main
+$table = "<table>";
+foreach($movies as $movie) {
+    $image = __DIR__."/images/".$movie['picture'];
+    if(!is_dir($image)) {
+        $imageData = base64_encode(file_get_contents($image));
+        $src = 'data: '.mime_content_type($image).';base64,'.$imageData;
+    }
+    $table .= "<tr><td><a href='movie/detail/".$movie['movie_id']."'>" . $movie['movie_id'] . "</a></td>";
+    $table .= "<td>" . $movie['title'] . "</td>";
+    $table .= "<td>" . $movie['year'] . "</td>";
+    $table .= "<td><img src='".$src."' alt='".$movie['picture']."'></td></tr>";
+}
+$table .= "</table>";
+
+$render[':content'] = $table;
+
+
+?>

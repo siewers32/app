@@ -80,4 +80,5 @@ class Route
     public function setClosure($closure) {
         $this->closure = $closure;
     }
+
 }
