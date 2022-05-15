@@ -11,4 +11,14 @@ class UserModel extends Model
         ];
         $this->pk = 'user_id';
     }
+
+    public function getByEmailPassword(PDO $connection, $email, $password) {
+        $query = "select * from ".$this->table." where email = :email and password = :password";
+        $stmt = $connection->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $password);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }

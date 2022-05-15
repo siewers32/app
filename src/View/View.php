@@ -13,6 +13,7 @@ class View
     public function __construct() {
         $this->page_dir = __DIR__."/../".$_ENV['VIEW_PATH']."/";
         $this->layout = $this->page_dir."/".$_ENV['VIEW_TPL'];
+        $this->data = [];
     }
 
     function setLayout($page) {
@@ -25,6 +26,7 @@ class View
 
     function render(Response $response, $page_name) {
         $render = [];
+        extract($this->data);
         $layout = file_get_contents($this->layout);
         include($this->page_dir."/".$page_name);
         $response->append(strtr($layout, $render));

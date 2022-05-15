@@ -71,13 +71,15 @@ class App
         };
 
         if(isset($this->route)) {
-            call_user_func_array($this->route->getClosure(), [$this->request, $this->response, $this->route->getArgs()]);
+            //Route-middleware
             foreach($this->route->getMiddleware() as $rmw) {
-                call_user_func_array($rmw, [$this->request, $this->response]);
+                call_user_func_array($rmw, [$this->request, $this->response, $this->c]);
             }
+            //App-middleware
             foreach($this->middleware as $mw) {
-                call_user_func_array($mw, [$this->request, $this->response]);
+                call_user_func_array($mw, [$this->request, $this->response, $this->c]);
             }
+            call_user_func_array($this->route->getClosure(), [$this->request, $this->response, $this->route->getArgs()]);
             echo $this->response->get();
         } else {
             echo "Route undefined!";

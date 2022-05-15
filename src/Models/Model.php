@@ -24,16 +24,34 @@ abstract class Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function store(PDO $connection) {
+    public function getByKeyValue(PDO $connection, $key, $value) {
+        $query = "select * from ".$this->table." where ".$key. "= :value";
+        $stmt = $connection->prepare($query);
+        $stmt->bindParam(':value', $value);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function store(PDO $connection, $args) {
         $query = "insert into ".$this->table." (".implode(", ", $this->fields).", created_at)"
             ." values (:".implode(", :", $this->fields).", '".date('Y-m-h h:m:i')."')";
         $stmt = $connection->prepare($query);
         foreach($this->fields as $field) {
-            if(isset($_POST[$field])) {
-                $stmt->bindParam(':'.$field,  $_POST[$field]);
+            if(isset($args[$field])) {
+                $stmt->bindParam(':'.$field,  $args[$field]);
             }
         }
 
         return $stmt->execute();
+    }
+
+    public function delete(PDO $connection, $id) {
+        if(isset($id) && is_numeric($id)) {
+            $query = "delete from ".$this->table." where ".$this->pk. "= :id";
+            $stmt = $connection->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return $stmt->rowCount();
+        }
     }
 }

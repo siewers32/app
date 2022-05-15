@@ -1,9 +1,9 @@
 <?php
+include("nav.phtml");
 extract($this->data);
-$render[':login'] = isset($_SESSION['user']) ? '<span>'.ucfirst($_SESSION['user']).'</span>':"<a href='index.php?p=login'>Login</a>";
-$render[':logout'] = isset($_SESSION['user']) ? "<a href='index.php?p=login&logout=true'>Uitloggen</a>": "";
 
-$render[':content'] = "<h1>Welkom bij de movie-database</h1>";
+$render[':content'] = "<p>De movie-database is een project om de basis-functionaliteit en de interne processen van php-frameworks onder de loep te nemen</p>";
 
 
 ?>
+

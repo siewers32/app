@@ -1,0 +1,16 @@
+<?php
+//Navigatie
+$render[":nav"] = "";
+$nav =  [
+    "<a href='/'>Home</a>",
+    "<a href='/movies'>Movies</a>",
+    isset($_SESSION['user']) ? "<a href='/movie/add'>Add Movie</a>": null,
+    isset($_SESSION['user']) ? '<span>'.ucfirst($_SESSION['user']['email']).'</span>':"<a href='/login'>Login</a>",
+    isset($_SESSION['user']) ? "<a href='/logout'>Uitloggen</a>": null,
+];
+
+foreach($nav as $link) {
+    if($link) {
+        $render[":nav"] .= $link . " | ".PHP_EOL;
+    }
+}

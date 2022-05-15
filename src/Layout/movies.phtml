@@ -1,9 +1,6 @@
 <?php
-extract($this->data);
-
 //Navigatie
-$render[':login'] = isset($_SESSION['user']) ? '<span>'.ucfirst($_SESSION['user']).'</span>':"<a href='index.php?p=login'>Login</a>";
-$render[':logout'] = isset($_SESSION['user']) ? "<a href='index.php?p=login&logout=true'>Uitloggen</a>": "";
+include("nav.phtml");
 
 
 //Main
@@ -17,7 +14,8 @@ foreach($movies as $movie) {
     $table .= "<tr><td><a href='movie/detail/".$movie['movie_id']."'>" . $movie['movie_id'] . "</a></td>";
     $table .= "<td>" . $movie['title'] . "</td>";
     $table .= "<td>" . $movie['year'] . "</td>";
-    $table .= "<td><img src='".$src."' alt='".$movie['picture']."'></td></tr>";
+    $table .= "<td><img src='".$src."' alt='".$movie['picture']."'></td>";
+    $table .= "<td><a href='/movie/delete/" . $movie['movie_id'] . "'>delete</a></td></tr>";
 }
 $table .= "</table>";
 
