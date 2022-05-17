@@ -3,3 +3,8 @@ DB_HOST=localhost
 DB_PORT=3306
 DB_USER=<username>
 DB_PASSWORD=<password>
+DB_NAME=mdb
+
+# View
+VIEW_PATH=Layout
+VIEW_TPL=layout.phtml
